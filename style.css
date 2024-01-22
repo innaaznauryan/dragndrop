@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    user-select: none;
+}
+
+#main {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    background-color: #b9dca9;
+    width: 400px;
+    aspect-ratio: 1;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    padding: 10px;
+    background-color: #035718;
+    color: #b9dca9;
+}
+
+.emptyItem {
+    padding: 10px;
+    background-color: #b9dca9;
+}
