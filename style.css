@@ -33,6 +33,5 @@ body {
 }
 
 .emptyItem {
-    padding: 10px;
-    background-color: #b9dca9;
+    height: 36px;
 }

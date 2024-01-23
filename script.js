@@ -1,5 +1,7 @@
 const main = document.getElementById("main")
 const boards = main.querySelectorAll(".board")
+const emptyItem = document.createElement("div")
+emptyItem.classList.add("emptyItem")
 
 let draggableItemId = null
 let sourceBoardId = null
@@ -20,18 +22,28 @@ function renderBoards() {
         })
         
         board.addEventListener("dragenter", e => {
-            moveElementToBoard(e)
+            // moveElementToBoard(e)
         })
 
         Array.from(items).forEach(item => {
             item.addEventListener("dragenter", e => {
-                moveElementAmongItems(e)
+                if(!e.target.classList.contains("item")) {
+                    return
+                }
+                console.log("entered", e.target)
+                if(e.clientY < e.target.getBoundingClientRect().y + e.target.getBoundingClientRect().height / 2) {
+                    e.target.insertAdjacentElement("beforebegin", emptyItem)
+                } else {
+                    e.target.insertAdjacentElement("afterend", emptyItem)
+                }
             })
         })
 
         Array.from(items).forEach(item => {
             item.addEventListener("dragleave", e => {
+                console.log("left", e.target)
                 // moveElementAmongItems(e)
+                // board.removeChild(emptyItem)
             })
         })
 
@@ -42,6 +54,17 @@ function renderBoards() {
                 }
             })
         })
+
+        board.addEventListener("drop", e => {
+            console.log(e.target)
+            const draggableItem = main.querySelector("#" + draggableItemId)
+            if(e.target.classList.contains("board")) {
+                e.target.appendChild(draggableItem)
+                board.removeChild(emptyItem)
+            } else {
+                board.replaceChild(draggableItem, emptyItem)
+            }
+        })
     })
 }
 
@@ -49,14 +72,15 @@ function moveElementAmongItems(e) {
     if(!e.target.classList.contains("item")) {
         return
     }
-    const emptyItem = document.createElement("div")
-    emptyItem.classList.add("emptyItem")
-    const draggableItem = main.querySelector("#" + draggableItemId)
-    if(e.clientY < e.target.getBoundingClientRect().y + e.target.getBoundingClientRect().height / 2) {
-        e.target.insertAdjacentElement("beforebegin", emptyItem)
-    } else {
-        e.target.insertAdjacentElement("afterend", emptyItem)
-    }
+    // const emptyItem = document.createElement("div")
+    // emptyItem.classList.add("emptyItem")
+    // const draggableItem = main.querySelector("#" + draggableItemId)
+    e.target.insertAdjacentElement("beforebegin", emptyItem)
+    // if(e.clientY < e.target.getBoundingClientRect().y + e.target.getBoundingClientRect().height / 2) {
+    //     e.target.insertAdjacentElement("beforebegin", emptyItem)
+    // } else {
+    //     e.target.insertAdjacentElement("afterend", emptyItem)
+    // }
 }
 
 function moveElementToBoard(e) {
