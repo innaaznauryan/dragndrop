@@ -30,6 +30,7 @@ body {
     padding: 10px;
     background-color: #035718;
     color: #b9dca9;
+    list-style-type: none;
 }
 
 .emptyItem {
