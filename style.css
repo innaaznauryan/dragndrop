@@ -35,4 +35,5 @@ body {
 
 .emptyItem {
     height: 36px;
+    border: 1px solid gray;
 }
